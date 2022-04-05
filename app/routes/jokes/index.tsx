@@ -2,9 +2,9 @@ import { Joke } from "@prisma/client";
 import { LoaderFunction } from "@remix-run/server-runtime";
 import { json } from "@remix-run/node";
 import { db } from "~/utils/db.server";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
-type LoaderData = { joke: Joke };
+type LoaderData = { randomJoke: Joke };
 
 export const loader: LoaderFunction = async () => {
   const totalJokes = await db.joke.count();
@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async () => {
     take: 1,
     skip: randomRowNumber,
   });
-  const data: LoaderData = { joke: randomJokeList[0] };
+  const data: LoaderData = { randomJoke: randomJokeList[0] };
   return json(data);
 };
 
@@ -24,7 +24,8 @@ export default function JokesIndexRoute() {
   return (
     <div>
       <p>Here's a random joke:</p>
-      <p>{data.joke.content}</p>
+      <p>{data.randomJoke.content}</p>
+      <Link to={data.randomJoke.id}>"{data.randomJoke.name}" Permalink</Link>
     </div>
   );
 }
