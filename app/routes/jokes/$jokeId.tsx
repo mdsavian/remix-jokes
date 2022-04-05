@@ -1,3 +1,7 @@
+import { db } from "~/utils/db.server";
+
+type LoaderData = { joke: { name: string; content: string } };
+
 export default function JokeRoute() {
   return (
     <div>
