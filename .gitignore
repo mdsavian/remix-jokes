@@ -8,5 +8,5 @@ node_modules
 /cypress/videos
 /prisma/data.db
 /prisma/data.db-journal
-
+/prisma/dev.db
 /app/styles/tailwind.css
