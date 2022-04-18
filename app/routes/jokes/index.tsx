@@ -9,7 +9,6 @@ type LoaderData = { randomJoke: Joke };
 export const loader: LoaderFunction = async () => {
   const totalJokes = await db.joke.count();
   const randomRowNumber = Math.floor(totalJokes * Math.random());
-  console.log(totalJokes, randomRowNumber);
 
   const randomJokeList = await db.joke.findMany({
     take: 1,
