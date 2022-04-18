@@ -1,6 +1,7 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
+import { requireUserId } from "~/utils/session.server";
 
 import { db } from "~/utils/db.server";
 
@@ -45,7 +46,10 @@ export const action: ActionFunction = async ({ request }) => {
     name: validateJokeName(name),
     content: validateJokeContent(content),
   };
-  const fields = { name, content };
+
+  const userId = await requireUserId(request);
+
+  const fields = { name, content, jokesterId: userId };
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({ fieldErrors, fields });
   }
